@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Вікі-профіль — Приклад</title>
+  <style>
+    :root{--maxw:1100px;--accent:#2a6fdb;--muted:#666}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Arial,Helvetica,sans-serif;margin:0;background:#f6f7fb;color:#111}
+    .container{max-width:var(--maxw);margin:28px auto;padding:0 18px}
+    header{display:flex;align-items:center;gap:18px}
+    header h1{font-size:1.6rem;margin:0}
+    .meta{color:var(--muted);font-size:0.95rem}
+
+    .layout{display:grid;grid-template-columns:300px 1fr;gap:24px;margin-top:18px}
+    @media(max-width:880px){.layout{grid-template-columns:1fr}}
+
+    .infobox{background:#fff;border:1px solid #e3e6ee;padding:16px;border-radius:8px;box-shadow:0 1px 0 rgba(10,10,10,0.03)}
+    .infobox img{width:100%;height:auto;border-radius:6px}
+    .infobox .label{font-weight:600;margin-top:10px}
+    .infobox dl{margin:10px 0 0 0}
+    .infobox dt{font-size:0.85rem;color:var(--muted)}
+    .infobox dd{margin:0 0 8px;font-weight:600}
+
+    .content{background:#fff;border:1px solid #e3e6ee;padding:20px;border-radius:8px;box-shadow:0 1px 0 rgba(10,10,10,0.03)}
+
+    /* Tabs */
+    .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+    .tabs button{background:transparent;border:1px solid transparent;padding:8px 12px;border-radius:6px;cursor:pointer}
+    .tabs button[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+    .panel{display:none}
+    .panel[data-active="true"]{display:block}
+
+    /* small helpers */
+    .lead{font-size:1.02rem;color:#222;line-height:1.5}
+    a{color:var(--accent);text-decoration:none}
+    footer{margin:28px 0;color:var(--muted);font-size:0.9rem}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="Regeta shahray.png" alt="лого" width="64" height="64" style="border-radius:8px;">
+      <div>
+        <h1>Сергій Регета </h1>
+        <div class="meta">Чемпіон-футболіст с.Бортків</div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="infobox" aria-label="інформаційна картка">
+        <img id="person-photo" src="photo_5190734948544405827_y.jpg" alt="Регета їсть хотдог">
+        <div class="label">Коротка інформація</div>
+        <dl>
+          <dt>Народився</dt>
+          <dd>1 січня 2009, Бортків</dd>
+          <dt>Професія</dt>
+          <dd>Футболіст,Тренер</dd>
+          <dt>Головні досягнення</dt>
+          <dd>Виграв кубок району в 2024 році</dd>
+        </dl>
+      </aside>
+      <section class="content">
+        <nav class="tabs" role="tablist" aria-label="Вкладки профіля">
+          <button role="tab" aria-selected="false" data-target="biography">Біографія</button>
+          <button role="tab" aria-selected="false" data-target="works">Досягнення</button>
+        </nav>
+
+        <article id="biography" class="panel" role="tabpanel">
+          <h2>Біографія</h2>
+          <p>Талановитий парубок який народився в невеликому селищі Бортків, захоплювався футболом з малих років й завжди мріяв стати видатним футболістом. Кар'єра Сергія почалася в 2022 році, щодня він тренувався щоб стати хорошим футболістом. Зараз Сергій тренує молодих футболістів які в майбутньому хочуть стати такими самими як і він. </p>
+        </article>
+
+        <article id="works" class="panel" role="tabpanel">
+          <h2>Досягнення</h2>
+          <ol>
+            <li><strong>Кубок району </strong> —виграв турнір району разом з своєю командую в 2024році. </li>
+            <li><strong>Тренерство</strong> — почав тренувати юних футболістів які хочуть досягнути його висот в футболі.</li>
+          </ol>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      Вся інформація на сторінці була отримана офіційно з вуст Сергія Регети 
+  </div>
+
+  <script>
+    (function(){
+      const tabs = document.querySelectorAll('.tabs button');
+      const panels = document.querySelectorAll('.panel');
+      function show(targetId, button){
+        panels.forEach(p=>p.setAttribute('data-active','false'));
+        tabs.forEach(t=>t.setAttribute('aria-selected','false'));
+        document.getElementById(targetId).setAttribute('data-active','true');
+        button.setAttribute('aria-selected','true');
+        document.querySelector('.content').scrollIntoView({behavior:'smooth'});
+      }
+      tabs.forEach(btn=>{
+        btn.addEventListener('click',()=> show(btn.dataset.target, btn));
+      });
+    })();
+  </script>
+</body>
+</html>
